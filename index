@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XXX Vision - 零售货架视觉系统</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        * {
+            border-radius: 0.5rem; /* Apply rounded corners to all elements */
+        }
+        /* Responsive iframe for YouTube videos */
+        .video-responsive {
+            overflow: hidden;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            position: relative;
+            height: 0;
+        }
+        .video-responsive iframe {
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            border-radius: 0.5rem;
+        }
+        /* Custom animation for fade-in-up */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        .animate-fade-in-up.delay-200 {
+            animation-delay: 0.2s;
+        }
+        .animate-fade-in-up.delay-400 {
+            animation-delay: 0.4s;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-900 to-black text-gray-100">
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 bg-gray-900 bg-opacity-80 backdrop-blur-sm z-50 shadow-lg">
+        <nav class="container mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center space-x-2 mb-4 md:mb-0">
+                <i data-lucide="camera" class="text-blue-400 h-8 w-8"></i>
+                <h1 class="text-3xl font-bold text-blue-400">XXX Vision</h1>
+            </div>
+            <ul class="flex flex-wrap justify-center space-x-4 md:space-x-8" id="main-nav">
+                <!-- Navigation links will be populated by JavaScript -->
+            </ul>
+            <button id="language-toggle" class="mt-4 md:mt-0 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-full text-sm">
+                English
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image: url('https://placehold.co/1920x1080/000000/FFFFFF?text=Tech+Background');"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 to-purple-900/30"></div>
+        <div class="relative z-10 text-center px-6">
+            <h2 id="hero-title" class="text-4xl md:text-6xl font-extrabold leading-tight text-white mb-6 animate-fade-in-up"></h2>
+            <p id="hero-subtitle" class="text-lg md:text-2xl text-gray-300 mb-10 animate-fade-in-up delay-200"></p>
+            <button id="hero-button" class="px-8 py-3 md:px-10 md:py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg md:text-xl font-semibold rounded-full shadow-lg transform hover:scale-105 transition-all duration-300 animate-fade-in-up delay-400"></button>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <h3 id="features-title" class="text-4xl md:text-5xl font-bold text-white mb-16"></h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <!-- Feature Card 1 -->
+                <div class="bg-gray-900 p-8 rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 border border-blue-600/30">
+                    <i data-lucide="cpu" class="h-16 w-16 text-blue-400 mx-auto mb-6"></i>
+                    <h4 id="feature1-title" class="text-2xl font-semibold text-white mb-4"></h4>
+                    <p id="feature1-description" class="text-gray-300 text-lg"></p>
+                </div>
+                <!-- Feature Card 2 -->
+                <div class="bg-gray-900 p-8 rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 border border-blue-600/30">
+                    <i data-lucide="scan" class="h-16 w-16 text-blue-400 mx-auto mb-6"></i>
+                    <h4 id="feature2-title" class="text-2xl font-semibold text-white mb-4"></h4>
+                    <p id="feature2-description" class="text-gray-300 text-lg"></p>
+                </div>
+                <!-- Feature Card 3 -->
+                <div class="bg-gray-900 p-8 rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 border border-blue-600/30">
+                    <i data-lucide="layout-grid" class="h-16 w-16 text-blue-400 mx-auto mb-6"></i>
+                    <h4 id="feature3-title" class="text-2xl font-semibold text-white mb-4"></h4>
+                    <p id="feature3-description" class="text-gray-300 text-lg"></p>
+                </div>
+                <!-- Feature Card 4 -->
+                <div class="bg-gray-900 p-8 rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 border border-blue-600/30">
+                    <i data-lucide="trending-up" class="h-16 w-16 text-blue-400 mx-auto mb-6"></i>
+                    <h4 id="feature4-title" class="text-2xl font-semibold text-white mb-4"></h4>
+                    <p id="feature4-description" class="text-gray-300 text-lg"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6 text-center">
+            <h3 id="benefits-title" class="text-4xl md:text-5xl font-bold text-white mb-16"></h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <!-- Benefit Card 1 -->
+                <div class="bg-gray-800 p-8 rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 border border-purple-600/30">
+                    <i data-lucide="shield-check" class="h-16 w-16 text-purple-400 mx-auto mb-6"></i>
+                    <h4 id="benefit1-title" class="text-2xl font-semibold text-white mb-4"></h4>
+                    <p id="benefit1-description" class="text-gray-300 text-lg"></p>
+                </div>
+                <!-- Benefit Card 2 -->
+                <div class="bg-gray-800 p-8 rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 border border-purple-600/30">
+                    <i data-lucide="dollar-sign" class="h-16 w-16 text-purple-400 mx-auto mb-6"></i>
+                    <h4 id="benefit2-title" class="text-2xl font-semibold text-white mb-4"></h4>
+                    <p id="benefit2-description" class="text-gray-300 text-lg"></p>
+                </div>
+                <!-- Benefit Card 3 -->
+                <div class="bg-gray-800 p-8 rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300 border border-purple-600/30">
+                    <i data-lucide="cloud" class="h-16 w-16 text-purple-400 mx-auto mb-6"></i>
+                    <h4 id="benefit3-title" class="text-2xl font-semibold text-white mb-4"></h4>
+                    <p id="benefit3-description" class="text-gray-300 text-lg"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Roadmap Section -->
+    <section id="roadmap" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <h3 id="roadmap-title" class="text-4xl md:text-5xl font-bold text-white mb-16"></h3>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 text-left">
+                <!-- Hardware Roadmap -->
+                <div class="bg-gray-900 p-8 rounded-xl shadow-2xl border border-blue-600/30">
+                    <h4 id="hardware-roadmap-title" class="text-3xl font-semibold text-white mb-6"></h4>
+                    <ul class="space-y-6 text-lg text-gray-300">
+                        <li class="flex items-start">
+                            <span class="text-blue-400 mr-3 text-2xl">•</span>
+                            <div>
+                                <strong id="hardware1-strong" class="text-white"></strong>
+                                <span id="hardware1-description"></span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-400 mr-3 text-2xl">•</span>
+                            <div>
+                                <strong id="hardware2-strong" class="text-white"></strong>
+                                <span id="hardware2-description"></span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-400 mr-3 text-2xl">•</span>
+                            <div>
+                                <strong id="hardware3-strong" class="text-white"></strong>
+                                <span id="hardware3-description"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Software Roadmap -->
+                <div class="bg-gray-900 p-8 rounded-xl shadow-2xl border border-blue-600/30">
+                    <h4 id="software-roadmap-title" class="text-3xl font-semibold text-white mb-6"></h4>
+                    <ul class="space-y-6 text-lg text-gray-300">
+                        <li class="flex items-start">
+                            <span class="text-blue-400 mr-3 text-2xl">•</span>
+                            <div>
+                                <strong id="software1-strong" class="text-white"></strong>
+                                <span id="software1-description"></span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-400 mr-3 text-2xl">•</span>
+                            <div>
+                                <strong id="software2-strong" class="text-white"></strong>
+                                <span id="software2-description"></span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-400 mr-3 text-2xl">•</span>
+                            <div>
+                                <strong id="software3-strong" class="text-white"></strong>
+                                <span id="software3-description"></span>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-blue-400 mr-3 text-2xl">•</span>
+                            <div>
+                                <strong id="software4-strong" class="text-white"></strong>
+                                <span id="software4-description"></span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Model Section -->
+    <section id="business" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6 text-center">
+            <h3 id="business-title" class="text-4xl md:text-5xl font-bold text-white mb-16"></h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+                <!-- Model 1 -->
+                <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-purple-600/30">
+                    <h4 id="model1-title" class="text-3xl font-semibold text-white mb-6"></h4>
+                    <p id="model1-description" class="text-gray-300 text-lg mb-4"></p>
+                    <ul class="list-disc list-inside text-gray-300 text-lg space-y-2">
+                        <li id="model1-bullet1"></li>
+                        <li id="model1-bullet2"></li>
+                    </ul>
+                </div>
+                <!-- Model 2 -->
+                <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border border-purple-600/30">
+                    <h4 id="model2-title" class="text-3xl font-semibold text-white mb-6"></h4>
+                    <p id="model2-description" class="text-gray-300 text-lg mb-4"></p>
+                    <ul class="list-disc list-inside text-gray-300 text-lg space-y-2">
+                        <li>
+                            <strong id="model2-bullet1-strong" class="text-white"></strong>
+                            <span id="model2-bullet1-description"></span>
+                        </li>
+                        <li>
+                            <strong id="model2-bullet2-strong" class="text-white"></strong>
+                            <span id="model2-bullet2-description"></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Demos Section -->
+    <section id="demos" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6 text-center">
+            <h3 id="demos-title" class="text-4xl md:text-5xl font-bold text-white mb-16"></h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- YouTube Video 1 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-600/30">
+                    <div class="video-responsive mb-4">
+                        <iframe
+                            src="https://www.youtube.com/embed/q4FZTsQTh0Q"
+                            title="YouTube video player 1"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                    <h4 id="demo1-title" class="text-2xl font-semibold text-white mb-2"></h4>
+                    <p id="demo1-description" class="text-gray-300 text-lg"></p>
+                </div>
+                <!-- YouTube Video 2 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-600/30">
+                    <div class="video-responsive mb-4">
+                        <iframe
+                            src="https://www.youtube.com/embed/K3DIuR03KUY"
+                            title="YouTube video player 2"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                    <h4 id="demo2-title" class="text-2xl font-semibold text-white mb-2"></h4>
+                    <p id="demo2-description" class="text-gray-300 text-lg"></p>
+                </div>
+                <!-- YouTube Video 3 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-600/30">
+                    <div class="video-responsive mb-4">
+                        <iframe
+                            src="https://www.youtube.com/embed/q0LVhl-Oak8"
+                            title="YouTube video player 3"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                    <h4 id="demo3-title" class="text-2xl font-semibold text-white mb-2"></h4>
+                    <p id="demo3-description" class="text-gray-300 text-lg"></p>
+                </div>
+                <!-- YouTube Video 4 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-600/30">
+                    <div class="video-responsive mb-4">
+                        <iframe
+                            src="https://www.youtube.com/embed/E0afPUreGUs"
+                            title="YouTube video player 4"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                    <h4 class="text-2xl font-semibold text-white mb-2">系统演示四</h4>
+                    <p class="text-gray-300 text-lg">更多系统功能展示。</p>
+                </div>
+                <!-- YouTube Video 5 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-600/30">
+                    <div class="video-responsive mb-4">
+                        <iframe
+                            src="https://www.youtube.com/embed/cqkxtmqBApU"
+                            title="YouTube video player 5"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                    <h4 class="text-2xl font-semibold text-white mb-2">系统演示五</h4>
+                    <p class="text-gray-300 text-lg">客户案例分享。</p>
+                </div>
+                <!-- YouTube Video 6 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-600/30">
+                    <div class="video-responsive mb-4">
+                        <iframe
+                            src="https://www.youtube.com/embed/RxSiypCtk3Y"
+                            title="YouTube video player 6"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                    <h4 class="text-2xl font-semibold text-white mb-2">系统演示六</h4>
+                    <p class="text-gray-300 text-lg">技术深度解析。</p>
+                </div>
+                <!-- YouTube Video 7 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-600/30">
+                    <div class="video-responsive mb-4">
+                        <iframe
+                            src="https://www.youtube.com/embed/e4RLt7FCWqY"
+                            title="YouTube video player 7"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                    <h4 class="text-2xl font-semibold text-white mb-2">系统演示七</h4>
+                    <p class="text-gray-300 text-lg">未来发展方向。</p>
+                </div>
+                <!-- YouTube Video 8 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-600/30">
+                    <div class="video-responsive mb-4">
+                        <iframe
+                            src="https://www.youtube.com/embed/SdWIIf46HvvM"
+                            title="YouTube video player 8"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                    <h4 class="text-2xl font-semibold text-white mb-2">系统演示八</h4>
+                    <p class="text-gray-300 text-lg">行业应用场景。</p>
+                </div>
+                <!-- YouTube Video 9 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-600/30">
+                    <div class="video-responsive mb-4">
+                        <iframe
+                            src="https://www.youtube.com/embed/FYLc7-fOzBo"
+                            title="YouTube video player 9"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                    <h4 class="text-2xl font-semibold text-white mb-2">系统演示九</h4>
+                    <p class="text-gray-300 text-lg">解决方案优势。</p>
+                </div>
+                <!-- YouTube Video 10 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-600/30">
+                    <div class="video-responsive mb-4">
+                        <iframe
+                            src="https://www.youtube.com/embed/gFFQd7_rTQk"
+                            title="YouTube video player 10"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                    <h4 class="text-2xl font-semibold text-white mb-2">系统演示十</h4>
+                    <p class="text-gray-300 text-lg">成功部署案例。</p>
+                </div>
+                <!-- YouTube Video 11 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-600/30">
+                    <div class="video-responsive mb-4">
+                        <iframe
+                            src="https://www.youtube.com/embed/4hd_NX4VIdA"
+                            title="YouTube video player 11"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                    <h4 class="text-2xl font-semibold text-white mb-2">系统演示十一</h4>
+                    <p class="text-gray-300 text-lg">用户界面介绍。</p>
+                </div>
+                <!-- YouTube Video 12 -->
+                <div class="bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-600/30">
+                    <div class="video-responsive mb-4">
+                        <iframe
+                            src="https://www.youtube.com/embed/9XCs3b8nb0A"
+                            title="YouTube video player 12"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                    <h4 class="text-2xl font-semibold text-white mb-2">系统演示十二</h4>
+                    <p class="text-gray-300 text-lg">数据分析功能。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <h3 id="resources-title" class="text-4xl md:text-5xl font-bold text-white mb-16"></h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Resource Links will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6 text-center">
+            <h3 id="contact-title" class="text-4xl md:text-5xl font-bold text-white mb-16"></h3>
+            <p id="contact-subtitle" class="text-lg md:text-2xl text-gray-300 mb-8"></p>
+            <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-8">
+                <a href="mailto:info@xxxvision.com" class="flex items-center space-x-3 text-blue-400 hover:text-blue-300 text-xl transition-colors duration-300">
+                    <i data-lucide="mail" class="h-8 w-8"></i>
+                    <span>info@xxxvision.com</span>
+                </a>
+                <a href="tel:+1234567890" class="flex items-center space-x-3 text-blue-400 hover:text-blue-300 text-xl transition-colors duration-300">
+                    <i data-lucide="phone" class="h-8 w-8"></i>
+                    <span>+1 (234) 567-890</span>
+                </a>
+                <div class="flex items-center space-x-3 text-gray-300 text-xl">
+                    <i data-lucide="map-pin" class="h-8 w-8 text-blue-400"></i>
+                    <span id="contact-location"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-8 text-center text-gray-500 text-sm">
+        <div class="container mx-auto px-6">
+            <span id="footer-text"></span>
+        </div>
+    </footer>
+
+    <script>
+        // Translations object
+        const translations = {
+            zh: {
+                nav: {
+                    home: '首页',
+                    features: '核心功能',
+                    benefits: '系统优势',
+                    roadmap: '产品路线图',
+                    business: '商业模式',
+                    resources: '更多资源',
+                    demos: '产品演示',
+                    contact: '联系我们'
+                },
+                hero: {
+                    title: '赋能零售未来，智见货架洞察',
+                    subtitle: 'XXX零售货架视觉系统：实时、精准、智能的货架管理解决方案',
+                    button: '了解更多'
+                },
+                features: {
+                    title: '核心功能',
+                    feature1: {
+                        title: '数据流与模块架构',
+                        description: '前端智能相机 + 边缘计算 + 云协同，高性能、低延迟的数据流设计，实现本地商品检测与识别。'
+                    },
+                    feature2: {
+                        title: '图像融合与视野覆盖',
+                        description: '多图像融合技术，单个8MP摄像头即可覆盖更长货架，减少盲区，提高检测准确率。'
+                    },
+                    feature3: {
+                        title: '货架语义建模',
+                        description: '对货架环境进行语义级建模，构建“数字货架”模型，直观展示实际陈列与理想货架图的差异。'
+                    },
+                    feature4: {
+                        title: '差分比对算法',
+                        description: '高效的差分比对算法，无需大量训练数据即可基于图像变化直接判定异常，实时预警缺货或不合规。'
+                    }
+                },
+                benefits: {
+                    title: '系统优势',
+                    benefit1: {
+                        title: '隐私保护与安全',
+                        description: '内置隐私保护机制，本地处理图像，自动擦除人像等PII信息，确保数据安全与合规。'
+                    },
+                    benefit2: {
+                        title: '降低成本',
+                        description: '以更少设备覆盖同等区域，降低安装摄像头的总数量和成本，提高投资回报率。'
+                    },
+                    benefit3: {
+                        title: '高效与实时智能',
+                        description: '实现高效可靠、实时智能的零售货架视觉系统，提升运营效率和决策支持。'
+                    }
+                },
+                roadmap: {
+                    title: '产品路线图 (未来12个月)',
+                    hardwareTitle: '硬件产品线规划',
+                    hardware1: {
+                        strong: '旗舰版相机 (Q3 2025):',
+                        description: '8MP PoE有线相机，内置AI加速芯片，适用于大型超市卖场。'
+                    },
+                    hardware2: {
+                        strong: '高性价比版 (Q4 2025):',
+                        description: '5MP Wi-Fi相机，内置基础AI模块，面向中型超市、区域连锁。'
+                    },
+                    hardware3: {
+                        strong: '轻量版设备 (Q1 2026):',
+                        description: '2MP USB摄像头模组，超低成本，针对小型便利店、夫妻店。'
+                    },
+                    softwareTitle: '软件功能演进路线',
+                    software1: {
+                        strong: '当前 (2025Q3):',
+                        description: '基础识别功能 – SKU商品识别、缺货检测、货架图合规检查。'
+                    },
+                    software2: {
+                        strong: '短期 (＋3个月):',
+                        description: '边缘+云混合部署 – 本地实时分析 & 云端集中管理。'
+                    },
+                    software3: {
+                        strong: '中期 (＋6-9个月):',
+                        description: '分布式部署与管理 – 多摄像头/多门店协同 & 接口开放。'
+                    },
+                    software4: {
+                        strong: '长期 (＋12个月):',
+                        description: '高级智能与行业集成 – 自动化决策支持 & 深度分析。'
+                    }
+                },
+                business: {
+                    title: '创新商业模式',
+                    model1: {
+                        title: '“硬件免费+订阅”模式',
+                        description: '为降低中小零售商的采纳门槛，Xjera可采用赠送摄像头硬件，按月订阅SaaS服务的模式。商家零门槛试用，Xjera通过订阅费收回成本并盈利。',
+                        bullet1: '零元硬件投入，快速扩大中小客户群。',
+                        bullet2: '通过规模化订阅获得经常性收入和客户黏性。'
+                    },
+                    model2: {
+                        title: '差异化计费策略',
+                        description: '针对不同使用规模和效果，为客户提供灵活的收费方式：',
+                        bullet1: {
+                            strong: '按货架米数计费:',
+                            description: '以监控的货架长度或摄像头覆盖范围计费，收费与价值更匹配。'
+                        },
+                        bullet2: {
+                            strong: '按结果表现计费:',
+                            description: '根据系统实际产生的价值收费，例如以识别的缺货/陈列问题准确率或业绩提升为依据。'
+                        }
+                    }
+                },
+                demos: {
+                    title: '产品演示',
+                    demoTitles: [
+                        'XXX 系统概述',
+                        '实时缺货检测',
+                        '货架合规性分析',
+                        '系统演示四',
+                        '系统演示五',
+                        '系统演示六',
+                        '系统演示七',
+                        '系统演示八',
+                        '系统演示九',
+                        '系统演示十',
+                        '系统演示十一',
+                        '系统演示十二'
+                    ],
+                    demoDescriptions: [
+                        '深入了解我们的零售货架视觉系统。',
+                        '观看系统如何实时检测货架缺货情况。',
+                        '了解系统如何确保货架陈列符合规划。',
+                        '更多系统功能展示。',
+                        '客户案例分享。',
+                        '技术深度解析。',
+                        '未来发展方向。',
+                        '行业应用场景。',
+                        '解决方案优势。',
+                        '成功部署案例。',
+                        '用户界面介绍。',
+                        '数据分析功能。'
+                    ],
+                    videoIds: [
+                        'q4FZTsQTh0Q', 'K3DIuR03KUY', 'q0LVhl-Oak8', 'E0afPUreGUs',
+                        'cqkxtmqBApU', 'RxSiypCtk3Y', 'e4RLt7FCWqY', 'SdWIIf46HvvM',
+                        'FYLc7-fOzBo', 'gFFQd7_rTQk', '4hd_NX4VIdA', '9XCs3b8nb0A'
+                    ]
+                },
+                resources: {
+                    title: '更多资源',
+                    links: [
+                        { text: '白皮书', description: '下载我们的详细白皮书。', url: 'https://docs.google.com/document/d/1n5vUr7339VxoVbTkk7VTGZ3QN50ZcaxyGjq-VOnNN0I/edit?tab=t.0' },
+                        { text: '资源链接一', description: '了解我们的最新案例研究。', url: 'https://path/to/resource1' },
+                        { text: '资源链接二', description: '下载我们的产品白皮书。', url: 'https://path/to/resource2' },
+                        { text: '资源链接三', description: '观看产品演示视频。', url: 'https://path/to/resource3' },
+                        { text: '资源链接四', description: '阅读常见问题解答。', url: 'https://path/to/resource4' },
+                        { text: '资源链接五', description: '合作伙伴计划。', url: 'https://path/to/resource5' },
+                        { text: '资源链接六', description: '客户成功案例。', url: 'https://path/to/resource6' },
+                        { text: '资源链接七', description: '技术规格文档。', url: 'https://path/to/resource7' },
+                        { text: '资源链接八', description: '博客文章。', url: 'https://path/to/resource8' },
+                        { text: '资源链接九', description: '新闻稿。', url: 'https://path/to/resource9' },
+                        { text: '资源链接十', description: '加入我们的团队。', url: 'https://path/to/resource10' }
+                    ]
+                },
+                contact: {
+                    title: '联系我们',
+                    subtitle: '欲了解更多信息或安排演示，请联系我们的团队。',
+                    location: '新加坡，新加坡'
+                },
+                footer: {
+                    text: `© ${new Date().getFullYear()} XXX Vision. 保留所有权利。`
+                }
+            },
+            en: {
+                nav: {
+                    home: 'Home',
+                    features: 'Core Features',
+                    benefits: 'System Advantages',
+                    roadmap: 'Product Roadmap',
+                    business: 'Business Model',
+                    resources: 'More Resources',
+                    demos: 'Product Demos',
+                    contact: 'Contact Us'
+                },
+                hero: {
+                    title: 'Empowering Retail Future, Intelligent Shelf Insights',
+                    subtitle: 'XXX Retail Shelf Vision System: Real-time, Accurate, Intelligent Shelf Management Solution',
+                    button: 'Learn More'
+                },
+                features: {
+                    title: 'Core Features',
+                    feature1: {
+                        title: 'Data Flow & Module Architecture',
+                        description: 'Front-end smart cameras + edge computing + cloud collaboration, high-performance, low-latency data flow design for local product detection and recognition.'
+                    },
+                    feature2: {
+                        title: 'Image Fusion & Field of View',
+                        description: 'Multi-image fusion technology, a single 8MP camera can cover longer shelves, reducing blind spots and improving detection accuracy.'
+                    },
+                    feature3: {
+                        title: 'Shelf Semantic Modeling',
+                        description: 'Semantic modeling of the shelf environment, building a "digital shelf" model to intuitively display discrepancies between actual and ideal shelf layouts.'
+                    },
+                    feature4: {
+                        title: 'Differential Comparison Algorithm',
+                        description: 'Efficient differential comparison algorithm, no extensive training data needed to directly identify anomalies based on image changes, real-time alerts for out-of-stock or non-compliant items.'
+                    }
+                },
+                benefits: {
+                    title: 'System Advantages',
+                    benefit1: {
+                        title: 'Privacy Protection & Security',
+                        description: 'Built-in privacy protection mechanisms, local image processing, automatic erasure or anonymization of PII, ensuring data security and compliance.'
+                    },
+                    benefit2: {
+                        title: 'Reduced Costs',
+                        description: 'Covering the same area with fewer devices, reducing the total number and cost of camera installations, and improving ROI.'
+                    },
+                    benefit3: {
+                        title: 'Efficient & Real-time Intelligence',
+                        description: 'Achieving a highly efficient, reliable, and real-time intelligent retail shelf vision system, enhancing operational efficiency and decision support.'
+                    }
+                },
+                roadmap: {
+                    title: 'Product Roadmap (Next 12 Months)',
+                    hardwareTitle: 'Hardware Product Line Planning',
+                    hardware1: {
+                        strong: 'Flagship Camera (Q3 2025):',
+                        description: '8MP PoE wired camera (Sigmastar SSC338Q SoC), built-in AI acceleration chip; supports 1080p+ HD imaging, wide-angle lens covering large shelf areas; wired power and Ethernet for data, stable operation with ample bandwidth.'
+                    },
+                    hardware2: {
+                        strong: 'Cost-effective Version (Q4 2025):',
+                        description: '5MP Wi-Fi camera, built-in basic AI module; supports medium-resolution imaging, Wi-Fi wireless networking for data transmission; optional external power or battery, flexible installation.'
+                    },
+                    hardware3: {
+                        strong: 'Lightweight Device (Q1 2026):',
+                        description: '2MP USB camera module, relies on local mini-host (e.g., Raspberry Pi) for AI inference; ultra-low cost, supports plug-and-play; uses USB for power and data, no network configuration required.'
+                    },
+                    softwareTitle: 'Software Feature Evolution Roadmap',
+                    software1: {
+                        strong: 'Current (2025Q3):',
+                        description: 'Basic recognition functions – SKU product recognition, out-of-stock detection, shelf compliance check.'
+                    },
+                    software2: {
+                        strong: 'Short-term (＋3 months):',
+                        description: 'Edge + Cloud Hybrid Deployment – Local real-time analysis & centralized cloud management.'
+                    },
+                    software3: {
+                        strong: 'Mid-term (＋6-9 months):',
+                        description: 'Distributed Deployment & Management – Multi-camera/multi-store collaboration & open interfaces.'
+                    },
+                    software4: {
+                        strong: 'Long-term (＋12 months):',
+                        description: 'Advanced Intelligence & Industry Integration – Automated decision support & deep analysis.'
+                    }
+                },
+                business: {
+                    title: 'Innovative Business Models',
+                    model1: {
+                        title: '"Free Hardware + Subscription" Model',
+                        description: 'To lower the adoption threshold for small and medium-sized retailers, Xjera can offer free camera hardware with a monthly SaaS subscription. Merchants can try the system at no initial cost, and Xjera recoups hardware costs and profits through subscription fees.',
+                        bullet1: 'Zero hardware investment, rapid expansion of small and medium customer base.',
+                        bullet2: 'Generate recurring revenue and customer stickiness through scaled subscriptions.'
+                    },
+                    model2: {
+                        title: 'Differentiated Billing Strategies',
+                        description: 'Provide flexible billing methods tailored to different usage scales and effects:',
+                        bullet1: {
+                            strong: 'Billing by Shelf Meter:',
+                            description: 'Charge based on the length of shelves monitored or camera coverage area, aligning costs more closely with value received.'
+                        },
+                        bullet2: {
+                            strong: 'Performance-based Billing:',
+                            description: 'Introduce performance-based fees, charging based on the actual value generated by the system, e.g., accuracy of out-of-stock/display issue identification or sales improvement.'
+                        }
+                    }
+                },
+                demos: {
+                    title: 'Product Demos',
+                    demoTitles: [
+                        'XXX System Overview',
+                        'Real-time Out-of-Stock Detection',
+                        'Shelf Compliance Analysis',
+                        'System Demo Four',
+                        'System Demo Five',
+                        'System Demo Six',
+                        'System Demo Seven',
+                        'System Demo Eight',
+                        'System Demo Nine',
+                        'System Demo Ten',
+                        'System Demo Eleven',
+                        'System Demo Twelve'
+                    ],
+                    demoDescriptions: [
+                        'Get an in-depth look at our retail shelf vision system.',
+                        'See how the system detects out-of-stock situations on shelves in real-time.',
+                        'Understand how the system ensures shelf displays comply with planograms.',
+                        'More system features demonstrated.',
+                        'Customer case study sharing.',
+                        'In-depth technical analysis.',
+                        'Future development directions.',
+                        'Industry application scenarios.',
+                        'Solution advantages.',
+                        'Successful deployment cases.',
+                        'User interface introduction.',
+                        'Data analysis functions.'
+                    ],
+                    videoIds: [
+                        'q4FZTsQTh0Q', 'K3DIuR03KUY', 'q0LVhl-Oak8', 'E0afPUreGUs',
+                        'cqkxtmqBApU', 'RxSiypCtk3Y', 'e4RLt7FCWqY', 'SdWIIf46HvvM',
+                        'FYLc7-fOzBo', 'gFFQd7_rTQk', '4hd_NX4VIdA', '9XCs3b8nb0A'
+                    ]
+                },
+                resources: {
+                    title: 'More Resources',
+                    links: [
+                        { text: 'Whitepaper', description: 'Download our detailed whitepaper.', url: 'https://docs.google.com/document/d/1n5vUr7339VxoVbTkk7VTGZ3QN50ZcaxyGjq-VOnNN0I/edit?tab=t.0' },
+                        { text: 'Resource Link One', description: 'Explore our latest case studies.', url: 'https://path/to/resource1' },
+                        { text: 'Resource Link Two', description: 'Download our product whitepaper.', url: 'https://path/to/resource2' },
+                        { text: 'Resource Link Three', description: 'Watch product demo videos.', url: 'https://path/to/resource3' },
+                        { text: 'Resource Link Four', description: 'Read frequently asked questions.', url: 'https://path/to/resource4' },
+                        { text: 'Resource Link Five', description: 'Partner program.', url: 'https://path/to/resource5' },
+                        { text: 'Resource Link Six', description: 'Customer success stories.', url: 'https://path/to/resource6' },
+                        { text: 'Resource Link Seven', description: 'Technical specifications document.', url: 'https://path/to/resource7' },
+                        { text: 'Resource Link Eight', description: 'Blog posts.', url: 'https://path/to/resource8' },
+                        { text: 'Resource Link Nine', description: 'Press releases.', url: 'https://path/to/resource9' },
+                        { text: 'Resource Link Ten', description: 'Join our team.', url: 'https://path/to/resource10' }
+                    ]
+                },
+                contact: {
+                    title: 'Contact Us',
+                    subtitle: 'For more information or to arrange a demo, please contact our team.',
+                    location: 'Singapore, Singapore'
+                },
+                footer: {
+                    text: `© ${new Date().getFullYear()} XXX Vision. All rights reserved.`
+                }
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'zh'; // Default to Chinese
+
+        // Function to update content based on language
+        function updateContent() {
+            const langData = translations[currentLang];
+
+            // Update navigation
+            const navItems = [
+                { id: 'home', text: langData.nav.home },
+                { id: 'features', text: langData.nav.features },
+                { id: 'benefits', text: langData.nav.benefits },
+                { id: 'roadmap', text: langData.nav.roadmap },
+                { id: 'business', text: langData.nav.business },
+                { id: 'resources', text: langData.nav.resources },
+                { id: 'demos', text: langData.nav.demos },
+                { id: 'contact', text: langData.nav.contact }
+            ];
+            const mainNav = document.getElementById('main-nav');
+            mainNav.innerHTML = ''; // Clear existing nav items
+            navItems.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'mb-2 md:mb-0';
+                const button = document.createElement('button');
+                button.id = `nav-${item.id}`;
+                button.className = `text-lg font-medium transition-colors duration-300 text-gray-300 hover:text-blue-300 px-2 py-1`;
+                button.textContent = item.text;
+                button.onclick = () => scrollToSection(item.id);
+                li.appendChild(button);
+                mainNav.appendChild(li);
+            });
+
+            // Update Hero Section
+            document.getElementById('hero-title').textContent = langData.hero.title;
+            document.getElementById('hero-subtitle').textContent = langData.hero.subtitle;
+            document.getElementById('hero-button').textContent = langData.hero.button;
+
+            // Update Features Section
+            document.getElementById('features-title').textContent = langData.features.title;
+            document.getElementById('feature1-title').textContent = langData.features.feature1.title;
+            document.getElementById('feature1-description').textContent = langData.features.feature1.description;
+            document.getElementById('feature2-title').textContent = langData.features.feature2.title;
+            document.getElementById('feature2-description').textContent = langData.features.feature2.description;
+            document.getElementById('feature3-title').textContent = langData.features.feature3.title;
+            document.getElementById('feature3-description').textContent = langData.features.feature3.description;
+            document.getElementById('feature4-title').textContent = langData.features.feature4.title;
+            document.getElementById('feature4-description').textContent = langData.features.feature4.description;
+
+            // Update Benefits Section
+            document.getElementById('benefits-title').textContent = langData.benefits.title;
+            document.getElementById('benefit1-title').textContent = langData.benefits.benefit1.title;
+            document.getElementById('benefit1-description').textContent = langData.benefits.benefit1.description;
+            document.getElementById('benefit2-title').textContent = langData.benefits.benefit2.title;
+            document.getElementById('benefit2-description').textContent = langData.benefits.benefit2.description;
+            document.getElementById('benefit3-title').textContent = langData.benefits.benefit3.title;
+            document.getElementById('benefit3-description').textContent = langData.benefits.benefit3.description;
+
+            // Update Roadmap Section
+            document.getElementById('roadmap-title').textContent = langData.roadmap.title;
+            document.getElementById('hardware-roadmap-title').textContent = langData.roadmap.hardwareTitle;
+            document.getElementById('hardware1-strong').textContent = langData.roadmap.hardware1.strong;
+            document.getElementById('hardware1-description').textContent = langData.roadmap.hardware1.description;
+            document.getElementById('hardware2-strong').textContent = langData.roadmap.hardware2.strong;
+            document.getElementById('hardware2-description').textContent = langData.roadmap.hardware2.description;
+            document.getElementById('hardware3-strong').textContent = langData.roadmap.hardware3.strong;
+            document.getElementById('hardware3-description').textContent = langData.roadmap.hardware3.description;
+            document.getElementById('software-roadmap-title').textContent = langData.roadmap.softwareTitle;
+            document.getElementById('software1-strong').textContent = langData.roadmap.software1.strong;
+            document.getElementById('software1-description').textContent = langData.roadmap.software1.description;
+            document.getElementById('software2-strong').textContent = langData.roadmap.software2.strong;
+            document.getElementById('software2-description').textContent = langData.roadmap.software2.description;
+            document.getElementById('software3-strong').textContent = langData.roadmap.software3.strong;
+            document.getElementById('software3-description').textContent = langData.roadmap.software3.description;
+            document.getElementById('software4-strong').textContent = langData.roadmap.software4.strong;
+            document.getElementById('software4-description').textContent = langData.roadmap.software4.description;
+
+            // Update Business Model Section
+            document.getElementById('business-title').textContent = langData.business.title;
+            document.getElementById('model1-title').textContent = langData.business.model1.title;
+            document.getElementById('model1-description').textContent = langData.business.model1.description;
+            document.getElementById('model1-bullet1').textContent = langData.business.model1.bullet1;
+            document.getElementById('model1-bullet2').textContent = langData.business.model1.bullet2;
+            document.getElementById('model2-title').textContent = langData.business.model2.title;
+            document.getElementById('model2-description').textContent = langData.business.model2.description;
+            document.getElementById('model2-bullet1-strong').textContent = langData.business.model2.bullet1.strong;
+            document.getElementById('model2-bullet1-description').textContent = langData.business.model2.bullet1.description;
+            document.getElementById('model2-bullet2-strong').textContent = langData.business.model2.bullet2.strong;
+            document.getElementById('model2-bullet2-description').textContent = langData.business.model2.bullet2.description;
+
+            // Update Demos Section
+            document.getElementById('demos-title').textContent = langData.demos.title;
+            const demoGrid = document.querySelector('#demos .grid');
+            demoGrid.innerHTML = ''; // Clear existing demo videos
+
+            for (let i = 0; i < langData.demos.videoIds.length; i++) {
+                const div = document.createElement('div');
+                div.className = 'bg-gray-800 p-6 rounded-xl shadow-xl border border-purple-600/30';
+                div.innerHTML = `
+                    <div class="video-responsive mb-4">
+                        <iframe
+                            src="https://www.youtube.com/embed/${langData.demos.videoIds[i]}"
+                            title="YouTube video player ${i + 1}"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                    <h4 class="text-2xl font-semibold text-white mb-2">${langData.demos.demoTitles[i]}</h4>
+                    <p class="text-gray-300 text-lg">${langData.demos.demoDescriptions[i]}</p>
+                `;
+                demoGrid.appendChild(div);
+            }
+
+            // Update Resources Section
+            document.getElementById('resources-title').textContent = langData.resources.title;
+            const resourcesGrid = document.querySelector('#resources .grid');
+            resourcesGrid.innerHTML = ''; // Clear existing resource links
+            langData.resources.links.forEach(link => {
+                const a = document.createElement('a');
+                a.href = link.url;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                a.className = 'block bg-gray-900 p-6 rounded-xl shadow-xl transform hover:scale-105 transition-transform duration-300 border border-blue-600/30 group';
+                a.innerHTML = `
+                    <div class="flex items-center justify-center mb-4">
+                        <i data-lucide="link" class="h-12 w-12 text-blue-400 group-hover:text-blue-300 transition-colors duration-300"></i>
+                    </div>
+                    <h4 class="text-2xl font-semibold text-white mb-2 group-hover:text-blue-300 transition-colors duration-300">${link.text}</h4>
+                    <p class="text-gray-300 text-lg">${link.description}</p>
+                `;
+                resourcesGrid.appendChild(a);
+            });
+
+            // Update Contact Section
+            document.getElementById('contact-title').textContent = langData.contact.title;
+            document.getElementById('contact-subtitle').textContent = langData.contact.subtitle;
+            document.getElementById('contact-location').textContent = langData.contact.location;
+
+            // Update Footer
+            document.getElementById('footer-text').textContent = langData.footer.text;
+
+            // Update language toggle button text
+            document.getElementById('language-toggle').textContent = currentLang === 'zh' ? 'English' : '中文';
+
+            // Re-render Lucide icons after content update
+            lucide.createIcons();
+        }
+
+        // Smooth scrolling for navigation
+        function scrollToSection(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                // Optional: Update active state in navigation (requires more complex DOM manipulation for HTML)
+                // For simplicity, we'll just scroll.
+            }
+        }
+
+        // Language toggle functionality
+        document.getElementById('language-toggle').addEventListener('click', () => {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            localStorage.setItem('lang', currentLang);
+            updateContent();
+        });
+
+        // Initial content load and icon rendering
+        document.addEventListener('DOMContentLoaded', () => {
+            updateContent();
+            lucide.createIcons(); // Initialize Lucide icons
+        });
+    </script>
+</body>
+</html>
